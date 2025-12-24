@@ -32,6 +32,7 @@ Designed as a \*\*production-style software engineering project\*\*, focusing on
 
 ## System Architecture
 
+```text
 
 Raw Logs
 │
@@ -314,6 +315,7 @@ Ph.D. Candidate, Electrical Engineering — Virginia Tech
 
 
 Released for educational and research purposes.
+
 
 
 
