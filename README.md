@@ -1,4 +1,4 @@
-\# LLM-Powered Log Analysis System (RAG + Anomaly Detection)
+# LLM-Powered Log Analysis System (RAG + Anomaly Detection)
 
 
 
@@ -14,19 +14,18 @@ Designed as a \*\*production-style software engineering project\*\*, focusing on
 
 
 
-\## Features
+## Features
 
 
+\*\*Automated Log Understanding\*\*: Uses open-source \*\*LLMs\*\* to summarize logs and generate human-readable insights.
 
-\- \*\*Automated Log Understanding\*\*: Uses open-source \*\*LLMs\*\* to summarize logs and generate human-readable insights.
+\*\*RAG-Based Context Retrieval\*\*: Uses \*\*FAISS\*\* for efficient similarity search over log embeddings, enabling context-aware LLM reasoning.
 
-\- \*\*RAG-Based Context Retrieval\*\*: Uses \*\*FAISS\*\* for efficient similarity search over log embeddings, enabling context-aware LLM reasoning.
+\*\*Anomaly Detection\*\*: Combines \*\*Isolation Forest\*\* with LLM validation to identify abnormal patterns and prioritize alerts.
 
-\- \*\*Anomaly Detection\*\*: Combines \*\*Isolation Forest\*\* with LLM validation to identify abnormal patterns and prioritize alerts.
+\*\*Real-Time Query API\*\*: Exposes REST APIs via \*\*FastAPI\*\* for real-time search and analysis.
 
-\- \*\*Real-Time Query API\*\*: Exposes REST APIs via \*\*FastAPI\*\* for real-time search and analysis.
-
-\- \*\*Containerized Deployment\*\*: Packaged with \*\*Docker\*\* for easy local/cloud deployment.
+\*\*Containerized Deployment\*\*: Packaged with \*\*Docker\*\* for easy local/cloud deployment.
 
 
 
@@ -34,7 +33,7 @@ Designed as a \*\*production-style software engineering project\*\*, focusing on
 
 
 
-\## System Architecture
+## System Architecture
 
 
 
@@ -82,7 +81,7 @@ Embeddings (Sentence-Transformers)
 
 
 
-\## Tech Stack
+## Tech Stack
 
 
 
@@ -106,7 +105,7 @@ Embeddings (Sentence-Transformers)
 
 
 
-\## Project Structure
+## Project Structure
 
 
 
@@ -150,11 +149,11 @@ llm-log-analyzer/
 
 
 
-\## Installation
+## Installation
 
 
 
-\### 1) Create a virtual environment
+### 1) Create a virtual environment
 
 
 
@@ -168,7 +167,7 @@ source .venv/bin/activate
 
 
 
-\### 2) Install dependencies
+### 2) Install dependencies
 
 
 
@@ -184,7 +183,7 @@ pip install -r requirements.txt
 
 
 
-\## Build Index \& Models
+## Build Index \& Models
 
 
 
@@ -212,7 +211,7 @@ This step:
 
 
 
-\## Run the Service
+## Run the Service
 
 
 
@@ -236,11 +235,11 @@ Open:
 
 
 
-\## Example Usage
+## Example Usage
 
 
 
-\### Query logs
+### Query logs
 
 
 
@@ -252,7 +251,7 @@ curl -X POST "http://127.0.0.1:8000/query"   -H "Content-Type: application/json"
 
 
 
-\### Retrieve top anomalies
+### Retrieve top anomalies
 
 
 
@@ -268,7 +267,7 @@ curl "http://127.0.0.1:8000/anomalies?n=5"
 
 
 
-\## Performance Highlights (example offline evaluation)
+## Performance Highlights (example offline evaluation)
 
 
 
@@ -288,7 +287,7 @@ curl "http://127.0.0.1:8000/anomalies?n=5"
 
 
 
-\## Datasets
+## Datasets
 
 
 
@@ -304,7 +303,7 @@ curl "http://127.0.0.1:8000/anomalies?n=5"
 
 
 
-\## Extensibility Ideas
+## Extensibility Ideas
 
 
 
@@ -322,7 +321,7 @@ curl "http://127.0.0.1:8000/anomalies?n=5"
 
 
 
-\## Author
+## Author
 
 
 
@@ -336,11 +335,12 @@ Ph.D. Candidate, Electrical Engineering — Virginia Tech
 
 
 
-\## License
+## License
 
 
 
 Released for educational and research purposes.
+
 
 
 
