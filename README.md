@@ -27,11 +27,11 @@ Designed as a \*\*production-style software engineering project\*\*, focusing on
 \- \*\*Containerized Deployment\*\*: Packaged with \*\*Docker\*\* for easy local/cloud deployment.
 
 
+---
+
+
 ## System Architecture
 
-
-
-```text
 
 Raw Logs
 │
@@ -52,17 +52,11 @@ LLM Reasoning & Summarization
 REST API (FastAPI)
 
 
-
-
----
-
-
 ---
 
 
 
 ## Tech Stack
-
 
 
 \- \*\*Language:\*\* Python
@@ -320,6 +314,7 @@ Ph.D. Candidate, Electrical Engineering — Virginia Tech
 
 
 Released for educational and research purposes.
+
 
 
 
