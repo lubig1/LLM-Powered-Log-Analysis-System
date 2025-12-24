@@ -254,10 +254,6 @@ curl "http://127.0.0.1:8000/anomalies?n=5"
 
 
 
-> Replace the numbers above with your measured results if you run experiments on your own datasets.
-
-
-
 ---
 
 
@@ -315,6 +311,7 @@ Ph.D. Candidate, Electrical Engineering — Virginia Tech
 
 
 Released for educational and research purposes.
+
 
 
 
