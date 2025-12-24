@@ -16,21 +16,15 @@ Designed as a \*\*production-style software engineering project\*\*, focusing on
 
 ## Features
 
+\- \*\*Automated Log Understanding\*\*: Uses open-source \*\*LLMs\*\* to summarize logs and generate human-readable insights.
 
-\*\*Automated Log Understanding\*\*: Uses open-source \*\*LLMs\*\* to summarize logs and generate human-readable insights.
+\- \*\*RAG-Based Context Retrieval\*\*: Uses \*\*FAISS\*\* for efficient similarity search over log embeddings, enabling context-aware LLM reasoning.
 
-\*\*RAG-Based Context Retrieval\*\*: Uses \*\*FAISS\*\* for efficient similarity search over log embeddings, enabling context-aware LLM reasoning.
+\- \*\*Anomaly Detection\*\*: Combines \*\*Isolation Forest\*\* with LLM validation to identify abnormal patterns and prioritize alerts.
 
-\*\*Anomaly Detection\*\*: Combines \*\*Isolation Forest\*\* with LLM validation to identify abnormal patterns and prioritize alerts.
+\- \*\*Real-Time Query API\*\*: Exposes REST APIs via \*\*FastAPI\*\* for real-time search and analysis.
 
-\*\*Real-Time Query API\*\*: Exposes REST APIs via \*\*FastAPI\*\* for real-time search and analysis.
-
-\*\*Containerized Deployment\*\*: Packaged with \*\*Docker\*\* for easy local/cloud deployment.
-
-
-
----
-
+\- \*\*Containerized Deployment\*\*: Packaged with \*\*Docker\*\* for easy local/cloud deployment.
 
 
 ## System Architecture
@@ -40,41 +34,27 @@ Designed as a \*\*production-style software engineering project\*\*, focusing on
 ```text
 
 Raw Logs
+│
+▼
+Preprocessing & Normalization
+│
+▼
+Sentence Embeddings (Sentence-Transformers)
+│
+├──► FAISS Vector Index (RAG Retrieval)
+│
+└──► Isolation Forest (Anomaly Detection)
+│
+▼
+LLM Reasoning & Summarization
+│
+▼
+REST API (FastAPI)
 
-&nbsp; │
 
-&nbsp; ▼
 
-Preprocessing \& Normalization
 
-&nbsp; │
-
-&nbsp; ▼
-
-Embeddings (Sentence-Transformers)
-
-&nbsp; │
-
-&nbsp; ├──► FAISS Vector Index (RAG Retrieval)
-
-&nbsp; │
-
-&nbsp; └──► Isolation Forest (Anomaly Detection)
-
-&nbsp;           │
-
-&nbsp;           ▼
-
-&nbsp;    LLM Summarization \& Diagnosis
-
-&nbsp;           │
-
-&nbsp;           ▼
-
-&nbsp;       REST API (FastAPI)
-
-```
-
+---
 
 
 ---
@@ -340,6 +320,7 @@ Ph.D. Candidate, Electrical Engineering — Virginia Tech
 
 
 Released for educational and research purposes.
+
 
 
 
