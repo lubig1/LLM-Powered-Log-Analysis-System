@@ -51,7 +51,7 @@ LLM Reasoning & Summarization
 │
 ▼
 REST API (FastAPI)
-
+```
 
 ---
 
@@ -315,6 +315,7 @@ Ph.D. Candidate, Electrical Engineering — Virginia Tech
 
 
 Released for educational and research purposes.
+
 
 
 
