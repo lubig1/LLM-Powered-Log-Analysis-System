@@ -1,0 +1,47 @@
+import os, yaml
+from typing import Dict, Any, List
+from tqdm import tqdm
+
+from .utils import ensure_dir, write_jsonl
+from .preprocess import preprocess_logs
+from .embeddings import Embedder
+from .index import FaissIndex
+from .anomaly import AnomalyDetector
+
+def load_config(config_path="config.yaml") -> Dict[str, Any]:
+    with open(config_path, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+def read_raw_logs(path: str) -> List[str]:
+    with open(path, "r", encoding="utf-8") as f:
+        return f.readlines()
+
+def build_all(config_path="config.yaml"):
+    cfg = load_config(config_path)
+    raw_file = cfg["paths"]["raw_log_file"]
+    processed_dir = cfg["paths"]["processed_dir"]
+    ensure_dir(processed_dir)
+
+    lines = read_raw_logs(raw_file)
+    records = preprocess_logs(lines)
+
+    embedder = Embedder(cfg["embedding"]["model_name"])
+    texts = [r["normalized"] for r in records]
+    vectors = embedder.encode(texts)
+
+    # build faiss
+    idx = FaissIndex(dim=vectors.shape[1])
+    idx.add(vectors)
+    idx.save(cfg["paths"]["faiss_index"])
+
+    # anomaly model
+    ad = AnomalyDetector(**cfg["anomaly"])
+    ad.fit(vectors)
+    scores = ad.score(vectors)
+
+    # attach anomaly score
+    for r, s in zip(records, scores):
+        r["anomaly_score"] = float(s)
+
+    write_jsonl(cfg["paths"]["meta_file"], records)
+    return cfg, records

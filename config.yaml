@@ -1,0 +1,17 @@
+paths:
+  raw_log_file: "data/sample_logs.txt"
+  processed_dir: "data/processed"
+  faiss_index: "data/processed/faiss.index"
+  meta_file: "data/processed/meta.jsonl"
+
+embedding:
+  model_name: "sentence-transformers/all-MiniLM-L6-v2"
+
+llm:
+  task_model: "google/flan-t5-base"
+  max_new_tokens: 256
+
+anomaly:
+  contamination: 0.05
+  random_state: 42
+  n_estimators: 200

@@ -1,0 +1,27 @@
+import faiss
+import numpy as np
+from typing import Tuple, List
+
+class FaissIndex:
+    def __init__(self, dim: int):
+        self.dim = dim
+        self.index = faiss.IndexFlatIP(dim)  # cosine since normalized
+
+    def add(self, vectors: np.ndarray):
+        self.index.add(vectors)
+
+    def search(self, query_vec: np.ndarray, k: int = 5) -> Tuple[np.ndarray, np.ndarray]:
+        if query_vec.ndim == 1:
+            query_vec = query_vec[None, :]
+        scores, ids = self.index.search(query_vec, k)
+        return scores[0], ids[0]
+
+    def save(self, path: str):
+        faiss.write_index(self.index, path)
+
+    @staticmethod
+    def load(path: str):
+        idx = faiss.read_index(path)
+        obj = FaissIndex(idx.d)
+        obj.index = idx
+        return obj

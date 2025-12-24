@@ -1,0 +1,23 @@
+from fastapi import FastAPI
+from .schemas import QueryRequest, QueryResponse, AnomalyResponse
+from .api import LogAnalyzerService
+
+app = FastAPI(title="LLM Log Analyzer", version="1.0")
+
+service = None
+
+@app.on_event("startup")
+def startup():
+    global service
+    service = LogAnalyzerService("config.yaml")
+
+@app.post("/query", response_model=QueryResponse)
+def query(req: QueryRequest):
+    hits = service.search(req.query, req.top_k)
+    logs = [h["raw"] for h in hits]
+    summary, root = service.summarize_and_explain(logs)
+    return QueryResponse(retrieved_logs=hits, summary=summary, root_cause=root)
+
+@app.get("/anomalies", response_model=AnomalyResponse)
+def anomalies(n: int = 5):
+    return AnomalyResponse(anomalies=service.top_anomalies(n))

@@ -1,0 +1,30 @@
+from transformers import pipeline
+from typing import List
+
+class LLMHelper:
+    def __init__(self, model_name: str, max_new_tokens: int = 256):
+        # flan-t5 works for instruction tasks on CPU
+        self.pipe = pipeline(
+            "text2text-generation",
+            model=model_name,
+            device=-1
+        )
+        self.max_new_tokens = max_new_tokens
+
+    def summarize(self, logs: List[str]) -> str:
+        prompt = (
+            "Summarize the following logs in 3-5 bullets. "
+            "Highlight errors, warnings, and likely causes:\n\n"
+            + "\n".join(logs)
+        )
+        out = self.pipe(prompt, max_new_tokens=self.max_new_tokens)[0]["generated_text"]
+        return out.strip()
+
+    def root_cause(self, logs: List[str]) -> str:
+        prompt = (
+            "You are an SRE assistant. Given these logs, "
+            "explain the most likely root cause and suggested fix:\n\n"
+            + "\n".join(logs)
+        )
+        out = self.pipe(prompt, max_new_tokens=self.max_new_tokens)[0]["generated_text"]
+        return out.strip()

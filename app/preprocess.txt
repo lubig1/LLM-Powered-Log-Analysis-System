@@ -1,0 +1,32 @@
+import re
+from typing import List, Dict, Any
+from .utils import parse_timestamp
+
+LEVEL_RE = re.compile(r"\b(INFO|WARN|WARNING|ERROR|DEBUG|CRITICAL)\b")
+
+def normalize_line(line: str) -> str:
+    line = line.strip()
+    line = re.sub(r"\b\d{1,3}(\.\d{1,3}){3}\b", "<IP>", line)
+    line = re.sub(r"\b\d+\b", "<NUM>", line)
+    return line
+
+def extract_level(line: str) -> str:
+    m = LEVEL_RE.search(line)
+    return m.group(1) if m else "UNKNOWN"
+
+def preprocess_logs(lines: List[str]) -> List[Dict[str, Any]]:
+    out = []
+    for i, line in enumerate(lines):
+        if not line.strip():
+            continue
+        ts = parse_timestamp(line)
+        level = extract_level(line)
+        norm = normalize_line(line)
+        out.append({
+            "id": i,
+            "raw": line.strip(),
+            "normalized": norm,
+            "level": level,
+            "timestamp": ts.isoformat() if ts else None
+        })
+    return out

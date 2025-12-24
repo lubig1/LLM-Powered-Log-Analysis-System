@@ -1,0 +1,14 @@
+from pydantic import BaseModel
+from typing import List, Optional, Dict, Any
+
+class QueryRequest(BaseModel):
+    query: str
+    top_k: int = 5
+
+class QueryResponse(BaseModel):
+    retrieved_logs: List[Dict[str, Any]]
+    summary: str
+    root_cause: str
+
+class AnomalyResponse(BaseModel):
+    anomalies: List[Dict[str, Any]]

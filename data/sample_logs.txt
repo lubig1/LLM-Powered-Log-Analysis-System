@@ -1,0 +1,8 @@
+2025-11-20 10:00:01 INFO service=auth msg="user login ok" user_id=123 latency_ms=12
+2025-11-20 10:00:05 INFO service=payment msg="payment succeeded" order_id=9 amount=88.0 latency_ms=30
+2025-11-20 10:00:08 WARN service=payment msg="retrying payment due to timeout" order_id=10 latency_ms=2100
+2025-11-20 10:00:12 ERROR service=db msg="connection refused" host=10.0.0.1 port=5432
+2025-11-20 10:00:13 ERROR service=db msg="connection refused" host=10.0.0.1 port=5432
+2025-11-20 10:00:20 INFO service=auth msg="refresh token issued" user_id=123 latency_ms=15
+2025-11-20 10:00:30 ERROR service=cache msg="out of memory" region=us-west
+2025-11-20 10:00:45 INFO service=payment msg="payment succeeded" order_id=11 amount=20.0 latency_ms=29

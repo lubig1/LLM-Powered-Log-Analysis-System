@@ -1,0 +1,65 @@
+import yaml
+from typing import List, Dict, Any
+import numpy as np
+
+from .utils import read_jsonl
+from .embeddings import Embedder
+from .index import FaissIndex
+from .anomaly import AnomalyDetector
+from .llm import LLMHelper
+
+class LogAnalyzerService:
+    def __init__(self, config_path="config.yaml"):
+        with open(config_path, "r", encoding="utf-8") as f:
+            self.cfg = yaml.safe_load(f)
+
+        # load meta
+        self.records = read_jsonl(self.cfg["paths"]["meta_file"])
+
+        # load faiss
+        self.index = FaissIndex.load(self.cfg["paths"]["faiss_index"])
+
+        # embedder
+        self.embedder = Embedder(self.cfg["embedding"]["model_name"])
+
+        # anomaly detector (re-fit quickly)
+        vecs = self.embedder.encode([r["normalized"] for r in self.records])
+        self.anomaly = AnomalyDetector(**self.cfg["anomaly"])
+        self.anomaly.fit(vecs)
+
+        # llm
+        self.llm = LLMHelper(
+            self.cfg["llm"]["task_model"],
+            self.cfg["llm"]["max_new_tokens"]
+        )
+
+    def search(self, query: str, top_k: int = 5) -> List[Dict[str, Any]]:
+        qvec = self.embedder.encode([query])
+        scores, ids = self.index.search(qvec, k=top_k)
+
+        results = []
+        for s, i in zip(scores, ids):
+            if i == -1: 
+                continue
+            r = dict(self.records[i])
+            r["retrieval_score"] = float(s)
+            results.append(r)
+        return results
+
+    def summarize_and_explain(self, logs: List[str]):
+        summary = self.llm.summarize(logs)
+        root = self.llm.root_cause(logs)
+        return summary, root
+
+    def top_anomalies(self, n: int = 5):
+        vecs = self.embedder.encode([r["normalized"] for r in self.records])
+        scores = self.anomaly.score(vecs)
+
+        pairs = list(zip(scores, self.records))
+        pairs.sort(key=lambda x: x[0], reverse=True)
+        out = []
+        for s, r in pairs[:n]:
+            rr = dict(r)
+            rr["anomaly_score"] = float(s)
+            out.append(rr)
+        return out
